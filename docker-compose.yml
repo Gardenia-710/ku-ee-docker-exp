@@ -1,0 +1,64 @@
+version: '3.8'
+services:
+  host1:
+    container_name: exp_host1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    tty: true
+    privileged: true
+    networks:
+      route9:
+        ipv4_address: 192.168.9.10
+  host2:
+    container_name: exp_host2
+    build:
+      context: .
+      dockerfile: Dockerfile
+    tty: true
+    privileged: true
+    networks:
+      route8:
+        ipv4_address: 192.168.8.10
+  host3:
+    container_name: exp_host3
+    build:
+      context: .
+      dockerfile: Dockerfile
+    tty: true
+    privileged: true
+    networks:
+      route7:
+        ipv4_address: 192.168.7.10
+  host10:
+    image: frrouting/frr:latest
+    networks:
+      route9:
+      ipv4_address: 192.168.9.10
+  host20:
+    image: frrouting/frr:latest
+    networks:
+      route8:
+      ipv4_address: 192.168.8.10
+  host30:
+    image: frrouting/frr:latest
+    networks:
+      route7:
+      ipv4_address: 192.168.7.10
+
+networks:
+  route9:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.9.0/24
+  route8:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.8.0/24
+  route7:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.7.0/24
